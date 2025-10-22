@@ -1,15 +1,23 @@
 class BloomFilter:
-    def __init__(self, m, k):
-        self.m = [False] * m
-        self.k = k
+    def __init__(self):
+        self.bits = 0
+        # self.k = 2
 
     def add(self, key):
-        k = [abs(hash(key)) % len(self.m)] * self.k
-        if key in (len(self.m) - 1):
-            self.m = True
+        h = abs(hash(key)) % (2 ** 32)
+        h1 = h & 0xFFFF
+        h2 = h >> 16
+        self.bits |= (1 << h1)
+        self.bits |= 1 << h2
 
     def _true_bits():
         return
 
     def might_contain(self, key):
-        return
+        h = abs(hash(key)) % (2 ** 32)
+        h1 = h & 0xFFFF
+        h2 = h >> 16
+        if self.bits & (1 << h1) != 0:
+            return True
+        if self.bits & (1 << h2) != 0:
+            return True
