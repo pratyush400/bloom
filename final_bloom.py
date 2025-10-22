@@ -3,7 +3,6 @@ __author__ = "Jolie, Emma, Pratyush"
 class BloomFilter:
     def __init__(self):
         self.bits = 0
-        self.size = 2 ** 16  # 16 bits
 
     def add(self, key):
         h = abs(hash(key)) % (2 ** 32)
